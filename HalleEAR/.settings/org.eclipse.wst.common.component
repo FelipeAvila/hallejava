@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="HalleEAR">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="HalleWEB.war" deploy-path="/" handle="module:/resource/HalleWEB/HalleWEB">
+            <dependent-object>Module_1468007900804</dependent-object>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="HalleEJB.jar" deploy-path="/" handle="module:/resource/HalleEJB/HalleEJB">
+            <dependent-object>Module_1468007900847</dependent-object>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
