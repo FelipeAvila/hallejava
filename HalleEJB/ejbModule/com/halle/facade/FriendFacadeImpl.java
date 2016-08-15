@@ -111,10 +111,12 @@ public class FriendFacadeImpl implements FriendFacade {
 		Iterator<Friend> itr = list.iterator();
 		while(itr.hasNext()) {
 			Friend element = itr.next();
+			element.setHasHalle(0);
 			
 			User userFriend = userDAO.findPhone(element.getPhoneFriend());
 			if (userFriend != null && userFriend.getPhoto() != null) {
 				element.setPhotoFriend(userFriend.getPhoto());
+				element.setHasHalle(1);
 			}
 					
 			// Total de mensagens enviadas para o amigo

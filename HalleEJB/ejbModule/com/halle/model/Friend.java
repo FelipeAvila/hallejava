@@ -69,6 +69,9 @@ public class Friend extends AbstractBasicModel implements Serializable {
 	@Transient
 	private Integer messageReceive;
 	
+	@Transient
+	private Integer hasHalle;
+	
 	/*
 	 *	0, 'Amigo ativo'
 	 *	1, 'Amigo bloqueado
@@ -81,6 +84,8 @@ public class Friend extends AbstractBasicModel implements Serializable {
 	@Column(name = "REGISTER", nullable=true)
 	private Date register;
 
+	
+	
 	/**
 	 * @return the id
 	 */
@@ -206,4 +211,20 @@ public class Friend extends AbstractBasicModel implements Serializable {
 	public void setMessageReceive(Integer messageReceive) {
 		this.messageReceive = messageReceive;
 	}
+
+	/**
+	 * @return the hasHalle
+	 */
+	public Integer getHasHalle() {
+		return hasHalle;
+	}
+
+	/**
+	 * @param hasHalle the hasHalle to set
+	 */
+	public void setHasHalle(Integer hasHalle) {
+		this.hasHalle = hasHalle;
+	}
+
+
 }
