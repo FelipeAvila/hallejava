@@ -1,6 +1,5 @@
 package com.halle.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
@@ -75,12 +73,13 @@ public class UserResource extends BasicServiceObject {
 	}
 	
     @POST
-    @Path("/{login}/{phone}/{password}")
+    @Path("/{login}/{phone}/{password}/{tokenpush}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)	
 	public Response newUser(@PathParam("login") final String login,
 							@PathParam("phone") final String phone,
-							@PathParam("password") final String password) {
+							@PathParam("password") final String password,
+							@PathParam("tokenpush") final String tokenpush) {
     	
     	this.error = false;    	
     	this.valid(login, "login");
@@ -90,7 +89,7 @@ public class UserResource extends BasicServiceObject {
     	try {
     		if (!this.error) {
     			// Criando usuario
-				String token = this.service.create(login, phone, password);
+				String token = this.service.create(login, phone, password, tokenpush);
 
 
 				final String c = this.getMessage("user.sucess.code");

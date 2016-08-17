@@ -29,6 +29,9 @@ public class UserDTO {
 	
 	/** The token. */
 	private String token;
+	
+	/** The tokenpush. */
+	private String tokenpush;
 
 	/**
 	 * @return the name
@@ -113,4 +116,20 @@ public class UserDTO {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
+	/**
+	 * @return the tokenpush
+	 */
+	public String getTokenpush() {
+		return tokenpush;
+	}
+
+	/**
+	 * @param tokenpush the tokenpush to set
+	 */
+	public void setTokenpush(String tokenpush) {
+		this.tokenpush = tokenpush;
+	}
+	
+	
 }

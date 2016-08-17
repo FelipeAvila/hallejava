@@ -85,6 +85,10 @@ public class User extends AbstractBasicModel  implements Serializable {
 	@Lob
 	@Column(name="PHOTO", nullable=true, unique=false)
 	private byte[] photo;
+	
+	/** The senha. */
+	@Column(name = "TOKEN_PUSH", length=1000, nullable=true)
+	private String tokenPush;
 
 	/**
 	 * @return the phone
@@ -225,5 +229,19 @@ public class User extends AbstractBasicModel  implements Serializable {
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
-	
+
+	/**
+	 * @return the tokenPush
+	 */
+	public String getTokenPush() {
+		return tokenPush;
+	}
+
+	/**
+	 * @param tokenPush the tokenPush to set
+	 */
+	public void setTokenPush(String tokenPush) {
+		this.tokenPush = tokenPush;
+	}
+		
 }

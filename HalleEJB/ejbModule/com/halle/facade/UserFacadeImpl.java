@@ -58,7 +58,7 @@ public class UserFacadeImpl implements UserFacade {
 	 * @param password the password
 	 * @throws ApplicationException the application exception
 	 */
-	public String create(final String login, final String phone, final String password) throws ApplicationException {
+	public String create(final String login, final String phone, final String password, final String tokenPush) throws ApplicationException {
 		
 		// verificar se o login existe
 		final User userPhone = this.userDao.findPhone(phone);
@@ -76,6 +76,7 @@ public class UserFacadeImpl implements UserFacade {
 		User user = new User();
 		user.setPhone(phone);
 		user.setLogin(login);
+		user.setTokenPush(tokenPush);
 		try {
 			user.setPassword(MD5HashHelper.generateHash(password));
 		} catch (Exception e) {
@@ -224,6 +225,9 @@ public class UserFacadeImpl implements UserFacade {
 		user.setBirthday(data);
 		user.setEmail(userDTO.getEmail());
 		user.setPhoto(userDTO.getPhoto());
+		if (userDTO.getTokenpush() != null) {
+			user.setTokenPush(userDTO.getTokenpush());
+		}
 
 		return this.userDao.update(user);
 	}
@@ -315,7 +319,7 @@ public class UserFacadeImpl implements UserFacade {
 		this.userDao.delete(u);
 		
 		// Cria um novo usuário
-		String tokenNewUser = this.create(u.getLogin(), newPhone, "123");
+		String tokenNewUser = this.create(u.getLogin(), newPhone, "123", null);
 		
 		// Gera uma nova senha
 		String pass = this.forgotPassword(u.getLogin(), newPhone);

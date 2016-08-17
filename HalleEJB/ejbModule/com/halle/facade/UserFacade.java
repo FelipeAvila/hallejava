@@ -9,7 +9,7 @@ import com.halle.model.User;
 @Local
 public interface UserFacade {
 
-	String create(final String login, final String phone, final String password) throws ApplicationException;
+	String create(final String login, final String phone, final String password, final String tokenPush) throws ApplicationException;
 	
 	String auth(final String login, final String password) throws ApplicationException;
 	

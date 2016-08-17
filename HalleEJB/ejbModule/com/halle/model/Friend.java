@@ -72,6 +72,9 @@ public class Friend extends AbstractBasicModel implements Serializable {
 	@Transient
 	private Integer hasHalle;
 	
+	@Transient 
+	private String tokenPush;
+	
 	/*
 	 *	0, 'Amigo ativo'
 	 *	1, 'Amigo bloqueado
@@ -226,5 +229,18 @@ public class Friend extends AbstractBasicModel implements Serializable {
 		this.hasHalle = hasHalle;
 	}
 
+	/**
+	 * @return the tokenPush
+	 */
+	public String getTokenPush() {
+		return tokenPush;
+	}
+
+	/**
+	 * @param tokenPush the tokenPush to set
+	 */
+	public void setTokenPush(String tokenPush) {
+		this.tokenPush = tokenPush;
+	}
 
 }

@@ -117,6 +117,7 @@ public class FriendFacadeImpl implements FriendFacade {
 			if (userFriend != null && userFriend.getPhoto() != null) {
 				element.setPhotoFriend(userFriend.getPhoto());
 				element.setHasHalle(1);
+				element.setTokenPush(userFriend.getTokenPush());
 			}
 					
 			// Total de mensagens enviadas para o amigo
