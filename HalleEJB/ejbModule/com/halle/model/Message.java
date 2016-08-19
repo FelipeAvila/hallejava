@@ -91,6 +91,11 @@ public class Message extends AbstractBasicModel  implements Serializable {
 	@Transient 
 	private Integer isFriend; 
 	
+	@Transient
+	private byte[] photo;
+	
+	@Transient
+	private String tokenPush;
 	/**
 	 * @return the messageId
 	 */
@@ -209,5 +214,32 @@ public class Message extends AbstractBasicModel  implements Serializable {
 	public void setIsFriend(Integer isFriend) {
 		this.isFriend = isFriend;
 	}
-	
+
+	/**
+	 * @return the photo
+	 */
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	/**
+	 * @return the tokenPush
+	 */
+	public String getTokenPush() {
+		return tokenPush;
+	}
+
+	/**
+	 * @param tokenPush the tokenPush to set
+	 */
+	public void setTokenPush(String tokenPush) {
+		this.tokenPush = tokenPush;
+	}
 }

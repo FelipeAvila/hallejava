@@ -103,6 +103,9 @@ public class MessageFacadeImpl implements MessageFacade{
 				User userFriend = this.userDao.findPhone(element.getPhone());
 				if (userFriend != null) {
 					
+					element.setPhoto(userFriend.getPhoto());
+					element.setTokenPush(userFriend.getTokenPush());
+
 					if (userFriend.getNickname() != null) {
 						element.setNickname(userFriend.getNickname());
 					}
@@ -112,6 +115,11 @@ public class MessageFacadeImpl implements MessageFacade{
 				}
 			} 
 			else { // eh amigo
+				User userFriend = this.userDao.findPhone(element.getPhone());
+				if (userFriend != null) {				
+					element.setPhoto(userFriend.getPhoto());
+					element.setTokenPush(userFriend.getTokenPush());
+				}
 				element.setIsFriend(1);
 				element.setNickname(friend.getName());
 			}
