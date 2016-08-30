@@ -114,12 +114,14 @@ public class FriendFacadeImpl implements FriendFacade {
 			element.setHasHalle(0);
 			
 			User userFriend = userDAO.findPhone(element.getPhoneFriend());
-			if (userFriend != null && userFriend.getPhoto() != null) {
-				element.setPhotoFriend(userFriend.getPhoto());
+			if (userFriend != null) {	
 				element.setHasHalle(1);
 				element.setTokenPush(userFriend.getTokenPush());
+				if (userFriend.getPhoto() != null) {
+					element.setPhotoFriend(userFriend.getPhoto());
+				}
 			}
-					
+			
 			// Total de mensagens enviadas para o amigo
 			List<Message> lTotalSent = this.messageDAO.findMessageFriend(user.getPhone(), element.getPhoneFriend());
 			Integer messageSent = lTotalSent != null ? lTotalSent.size() : 0;
