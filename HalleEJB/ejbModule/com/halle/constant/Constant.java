@@ -23,4 +23,9 @@ public class Constant {
 	
 	public static final Integer MESSAGE_STATUS_READ = 3; // Mensagem Lida
 	
+	public static final String USER_DEFAULT = "halle"; // usuario halle
+	
+	public static final String PHONE_DEFAULT = "+5521911111111"; // usuario halle
+	
+	public static final Integer MESSAGE_TYPE_DEFAULT = 0; // Mensagem default
 }

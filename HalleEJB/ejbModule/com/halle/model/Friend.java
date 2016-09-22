@@ -1,7 +1,7 @@
 package com.halle.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
@@ -84,9 +86,9 @@ public class Friend extends AbstractBasicModel implements Serializable {
     private Integer status;
 	
 	/** The data inclusao. */
-	@Column(name = "REGISTER", nullable=true)
+	@Column(name = "REGISTER", nullable=true, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
 	private Date register;
-
 	
 	
 	/**

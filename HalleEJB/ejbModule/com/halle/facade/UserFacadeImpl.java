@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.halle.bean.UserDTO;
+import com.halle.constant.Constant;
 import com.halle.dao.FriendDAO;
 import com.halle.dao.MessageDAO;
 import com.halle.dao.UserDAO;
@@ -17,6 +18,7 @@ import com.halle.exception.ApplicationException;
 import com.halle.helper.MD5HashHelper;
 import com.halle.model.Friend;
 import com.halle.model.Message;
+import com.halle.model.MessageType;
 import com.halle.model.SecurityToken;
 import com.halle.model.User;
 
@@ -72,10 +74,14 @@ public class UserFacadeImpl implements UserFacade {
 			throw new ApplicationException("user.error.newUser.login");
 		}
 		
-		
 		User user = new User();
 		user.setPhone(phone);
 		user.setLogin(login);
+		
+		// Setar as informações do login no name e nickname
+		user.setName(login);
+		user.setNickname(login);
+		
 		user.setTokenPush(tokenPush);
 		try {
 			user.setPassword(MD5HashHelper.generateHash(password));
@@ -85,12 +91,42 @@ public class UserFacadeImpl implements UserFacade {
 		user.setCodeConfirmation(new Random().nextInt(9999));
 		this.userDao.create(user);
 				
-		//TODO --> ENVIAR A SOLICITACAO DE CONFIRMACAO
 		boolean confirmation = this.code(user.getCodeConfirmation(), phone);
 		
 		String token = this.auth(login, password);
 		
+		infoDefault(user);
+
 		return token;
+	}
+
+	/**
+	 * Metodo de inclusao do usuário na lista de amigos do halle e envio da primeira mensagem no app.
+	 * @param user
+	 */
+	private void infoDefault(User user) {
+		// Adicionar o amigo na lista de amigos do usuario halle
+		Friend newFriend = new Friend();
+		newFriend.setPhone(Constant.PHONE_DEFAULT);
+		newFriend.setPhoneFriend(user.getPhone());
+		newFriend.setName(user.getLogin());
+		newFriend.setStatus(Constant.FRIENDSHIP_STATUS_FRIEND); // Amigo Ativo 
+		// adicionando amigo
+		this.friendDAO.create(newFriend);
+		
+		
+		//Enviar a mensagem do usuário halle
+		Message message = new Message();
+		message.setPhone(Constant.PHONE_DEFAULT);
+		message.setPhoneFriend(user.getPhone());
+		message.setStatus(Constant.MESSAGE_STATUS_SENT); // mensagem enviada
+
+		MessageType mt = new MessageType();
+		mt.setMessageTypeId(Constant.MESSAGE_TYPE_DEFAULT);
+		message.setMessageType(mt);
+		
+		// gerando a mensagem
+		this.messageDAO.create(message);
 	}	
 
 
@@ -211,20 +247,33 @@ public class UserFacadeImpl implements UserFacade {
 		// Consultar informacoes do usuario
 		final User user = this.validAccess(userDTO.getToken());
 		
-		user.setName(userDTO.getName());
-		user.setNickname(userDTO.getNickname());
-		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		java.sql.Date data;
-		try {
-			data = new java.sql.Date(format.parse(userDTO.getBirthday()).getTime());
-		} catch (ParseException e) {
-			throw new ApplicationException("user.error.edit.birthday");				
+		if (userDTO.getName() != null) {
+			user.setName(userDTO.getName());
 		}
 		
-		user.setBirthday(data);
-		user.setEmail(userDTO.getEmail());
-		user.setPhoto(userDTO.getPhoto());
+		if (userDTO.getNickname() != null) {
+			user.setNickname(userDTO.getNickname());
+		}
+		
+		if (userDTO.getBirthday() != null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			java.sql.Date data;
+			try {
+				data = new java.sql.Date(format.parse(userDTO.getBirthday()).getTime());
+			} catch (ParseException e) {
+				throw new ApplicationException("user.error.edit.birthday");				
+			}
+			user.setBirthday(data);
+		}
+		
+		if (userDTO.getEmail() != null) {
+			user.setEmail(userDTO.getEmail());
+		}
+		
+		if (userDTO.getPhoto() != null) {
+			user.setPhoto(userDTO.getPhoto());
+		}
+		
 		if (userDTO.getTokenpush() != null) {
 			user.setTokenPush(userDTO.getTokenpush());
 		}

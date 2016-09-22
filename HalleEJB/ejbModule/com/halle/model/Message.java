@@ -1,7 +1,7 @@
 package com.halle.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -30,7 +32,7 @@ import javax.persistence.Transient;
 	@NamedQuery(name = "Message.findMessageRead", 	 query = "select m from Message m where m.phoneFriend = :phoneFriend and status = 3"),
 	@NamedQuery(name = "Message.findMessageId", query = "select m from Message m where m.messageId = :messageId"),
 	@NamedQuery(name = "Message.findMessagePhone", 	 query = "select m from Message m where m.phone = :phone"),
-	@NamedQuery(name = "Message.findMessageFriend",  query = "select m from Message m where m.phone = :phone and phoneFriend = :phoneFriend and register = CURDATE()"),
+	@NamedQuery(name = "Message.findMessageFriend",  query = "select m from Message m where m.phone = :phone and phoneFriend = :phoneFriend and STR_TO_DATE(register,  '%Y-%m-%d') = CURDATE()"),
 })
 public class Message extends AbstractBasicModel  implements Serializable {
 
@@ -82,7 +84,8 @@ public class Message extends AbstractBasicModel  implements Serializable {
 	private MessageType messageType;
 	
 	/** The data inclusao. */
-	@Column(name = "REGISTER", nullable=true)
+	@Column(name = "REGISTER", nullable=true, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
 	private Date register;
 
 	@Transient

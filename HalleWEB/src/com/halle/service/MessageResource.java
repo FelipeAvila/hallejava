@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
+import com.halle.bean.MessageAmountDTO;
 import com.halle.bean.MessageSentDTO;
 import com.halle.exception.ApplicationException;
 import com.halle.facade.MessageFacade;
@@ -191,6 +192,45 @@ public class MessageResource extends BasicServiceObject {
 			
 		}
 	}
+	
+	/**
+	 * Find id.
+	 *
+	 * @param id the id
+	 * @return the response
+	 */
+	@GET
+    @Path("/amount/{token}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findQtdMessageSent(@PathParam("token") final String token) {
+    	
+    	this.error = false;    	
+    	this.valid(token, "token");
+		
+    	try {
+    		if (!this.error) {
+				List<Message> m = (List<Message>) this.service.findMessage(token);
+				super.addMessageOK("message.sucess.get");
+				
+				MessageAmountDTO value = new MessageAmountDTO();
+				value.setSum(String.valueOf(m.size()));
+
+				return Response.status(Response.Status.OK).entity(value).build();				
+    		}
+			else {
+	    		return Response.status(Response.Status.FORBIDDEN).entity(super.returnMessage()).build();    			
+			}
+    	} catch (ApplicationException e) {
+    		super.addMessageErr(e.getMessage());
+    		return Response.status(Response.Status.NOT_ACCEPTABLE).entity(super.returnMessage()).build();
+			
+		} catch (Exception e1) {
+    		super.addMessageErr("user.error.message");
+			logger.error("Erro ao efetuar a consulta de mensagem - " + e1.getMessage());
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(super.returnMessage()).build();
+			
+		}
+	}	
 	
     /**
      * Valid.

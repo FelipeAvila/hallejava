@@ -16,7 +16,6 @@ import com.halle.model.Friend;
 import com.halle.model.Message;
 import com.halle.model.User;
 
-// TODO: Auto-generated Javadoc
 /**
  * Classe para definir os serviços do Usuario
  * 

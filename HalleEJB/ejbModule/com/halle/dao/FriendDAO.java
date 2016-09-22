@@ -1,7 +1,6 @@
 package com.halle.dao;
 
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class FriendDAO extends GenericDAO<Friend> {
 	 * @param usuario the usuario
 	 */
 	public void create(final Friend friend) {
-		friend.setRegister(new Date(Calendar.getInstance().getTime().getTime()));
+		friend.setRegister(new Date());
 		super.save(friend);
 	}
 	

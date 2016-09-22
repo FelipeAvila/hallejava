@@ -1,7 +1,6 @@
 package com.halle.dao;
 
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class MessageDAO extends GenericDAO<Message> {
 	 * @param message the message
 	 */
 	public void create(final Message message) {
-		message.setRegister(new Date(Calendar.getInstance().getTime().getTime()));
+		message.setRegister(new Date());
 		super.save(message);
 	}
 	

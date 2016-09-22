@@ -1,7 +1,6 @@
 package com.halle.dao;
 
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class UserDAO extends GenericDAO<User> {
 	 * @param usuario the usuario
 	 */
 	public void create(final User user) {
-		user.setRegister(new Date(Calendar.getInstance().getTime().getTime()));
+		user.setRegister(new Date());
 		super.save(user);
 	}
 	

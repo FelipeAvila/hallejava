@@ -1,7 +1,7 @@
 package com.halle.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Classe de dominio de Usuario.
@@ -76,7 +78,8 @@ public class User extends AbstractBasicModel  implements Serializable {
 	private Date birthday;
 	
 	/** The data inclusao. */
-	@Column(name = "REGISTER", nullable=true) //, columnDefinition = "DATE DEFAULT CURRENT_DATE"
+	@Column(name = "REGISTER", nullable=true, columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date register;
 	
 	@Column(name="CODE", length=1, nullable=true, unique=false)
