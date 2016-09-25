@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
+import com.halle.constant.Constant;
 import com.halle.exception.ApplicationException;
 import com.halle.facade.FriendFacade;
 import com.halle.model.Friend;
@@ -58,7 +59,7 @@ public class FriendResource extends BasicServiceObject {
 
     	try {
     		if (!this.error) {
-				List<Friend> list = this.service.findAllFriend(token);
+				List<Friend> list = this.service.findAllFriend(token, null);
 				super.addMessageOK("friend.sucess.list");
 				return Response.status(Response.Status.OK).entity(list).build();
     		}
@@ -77,6 +78,75 @@ public class FriendResource extends BasicServiceObject {
 		}
     }
 
+    /**
+     * Gets the list contacts.
+     *
+     * @param token the token
+     * @return the list friend
+     */
+    @GET
+    @Path("/contacts/{token}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findContacts(@PathParam("token") final String token) {
+    	this.error = false;    	
+    	this.valid(token, "token");
+
+    	try {
+    		if (!this.error) {
+				List<Friend> list = this.service.findAllFriend(token, Constant.CONTACTS);
+				super.addMessageOK("friend.sucess.list");
+				return Response.status(Response.Status.OK).entity(list).build();
+    		}
+    		else {
+        		return Response.status(Response.Status.FORBIDDEN).entity(super.returnMessage()).build();    			
+    		}
+
+    	} catch (ApplicationException e) {
+    		super.addMessageErr(e.getMessage());
+    		return Response.status(Response.Status.NOT_ACCEPTABLE).entity(super.returnMessage()).build();
+			
+		} catch (Exception e1) {
+    		super.addMessageErr("user.error.message");
+			logger.error("Erro ao efetuar a consulta de amigos - " + e1.getMessage());
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(super.returnMessage()).build();			
+		}
+    }
+
+    /**
+     * Gets the list contacts.
+     *
+     * @param token the token
+     * @return the list friend
+     */
+    @GET
+    @Path("/friends/{token}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findFriends(@PathParam("token") final String token) {
+    	this.error = false;    	
+    	this.valid(token, "token");
+
+    	try {
+    		if (!this.error) {
+				List<Friend> list = this.service.findAllFriend(token, Constant.FRIENDS);
+				super.addMessageOK("friend.sucess.list");
+				return Response.status(Response.Status.OK).entity(list).build();
+    		}
+    		else {
+        		return Response.status(Response.Status.FORBIDDEN).entity(super.returnMessage()).build();    			
+    		}
+
+    	} catch (ApplicationException e) {
+    		super.addMessageErr(e.getMessage());
+    		return Response.status(Response.Status.NOT_ACCEPTABLE).entity(super.returnMessage()).build();
+			
+		} catch (Exception e1) {
+    		super.addMessageErr("user.error.message");
+			logger.error("Erro ao efetuar a consulta de amigos - " + e1.getMessage());
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(super.returnMessage()).build();			
+		}
+    }
+ 
+    
     /**
      * Valid.
      *

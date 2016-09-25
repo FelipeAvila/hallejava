@@ -12,6 +12,6 @@ public interface FriendFacade {
 	
 	void inviteByPhone(final String token, final String name, final String phoneFriend) throws ApplicationException;
 	
-	 List<Friend> findAllFriend(final String token) throws ApplicationException;
-	 
+	List<Friend> findAllFriend(final String token, String status) throws ApplicationException;
+	
 }

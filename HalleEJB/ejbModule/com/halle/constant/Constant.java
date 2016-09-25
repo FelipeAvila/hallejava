@@ -15,6 +15,10 @@ public class Constant {
 	
 	/** Amigo bloqueado */
 	public static final Integer FRIENDSHIP_STATUS_BLOCKED = 1; // Amigo Bloqueado
+
+	public static final String CONTACTS = "C";
+	
+	public static final String FRIENDS = "F";
 	
 	
 	public static final Integer MESSAGE_STATUS_SENT = 1; // Mensagem enviada
@@ -28,4 +32,6 @@ public class Constant {
 	public static final String PHONE_DEFAULT = "+5521911111111"; // usuario halle
 	
 	public static final Integer MESSAGE_TYPE_DEFAULT = 0; // Mensagem default
+	
+
 }

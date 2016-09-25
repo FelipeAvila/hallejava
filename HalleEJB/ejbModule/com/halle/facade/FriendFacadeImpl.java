@@ -1,5 +1,6 @@
 package com.halle.facade;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -97,10 +98,11 @@ public class FriendFacadeImpl implements FriendFacade {
 	 * findAllFriend the user.
 	 *
 	 * @param token the token
+	 * @param status the status - "F"- FRIENDS / "C" - CONTACTS
 	 * @return the user
 	 * @throws ApplicationException the application exception
 	 */
-	public List<Friend> findAllFriend(final String token) throws ApplicationException {
+	public List<Friend> findAllFriend(final String token, String status) throws ApplicationException {
 		
 		// Consultar informacoes do usuario
 		final User user = this.userService.validAccess(token);
@@ -119,18 +121,40 @@ public class FriendFacadeImpl implements FriendFacade {
 				if (userFriend.getPhoto() != null) {
 					element.setPhotoFriend(userFriend.getPhoto());
 				}
+
+				// Total de mensagens enviadas para o amigo
+				List<Message> lTotalSent = this.messageDAO.findMessageFriend(user.getPhone(), element.getPhoneFriend());
+				Integer messageSent = lTotalSent != null ? lTotalSent.size() : 0;
+				element.setMessageSent(messageSent);
+				
+				// Total de mensagens recebidas do para o amigo
+				List<Message> lTotalReceive = this.messageDAO.findMessageFriend(element.getPhoneFriend(), user.getPhone());
+				Integer messageReceive = lTotalReceive != null ? lTotalReceive.size() : 0;
+				element.setMessageReceive(messageReceive);
+			}
+		
+			
+		}
+		
+		// Utilizando o filtro de status
+		if (status != null) {
+			List<Friend> listFilter = new ArrayList<Friend>();
+			Iterator<Friend> itr2 = list.iterator();
+			while(itr2.hasNext()) {
+				Friend element = itr2.next();
+				
+				if (status.equals(Constant.CONTACTS) && element.getHasHalle().intValue() == 0) {
+					listFilter.add(element);	
+				}
+				else if (status.equals(Constant.FRIENDS) && element.getHasHalle().intValue() == 1) {
+					listFilter.add(element);
+				}
 			}
 			
-			// Total de mensagens enviadas para o amigo
-			List<Message> lTotalSent = this.messageDAO.findMessageFriend(user.getPhone(), element.getPhoneFriend());
-			Integer messageSent = lTotalSent != null ? lTotalSent.size() : 0;
-			element.setMessageSent(messageSent);
-			
-			// Total de mensagens recebidas do para o amigo
-			List<Message> lTotalReceive = this.messageDAO.findMessageFriend(element.getPhoneFriend(), user.getPhone());
-			Integer messageReceive = lTotalReceive != null ? lTotalReceive.size() : 0;
-			element.setMessageReceive(messageReceive);
+			return listFilter;
 		}
+		
+
 		
 		return list;
 	}
